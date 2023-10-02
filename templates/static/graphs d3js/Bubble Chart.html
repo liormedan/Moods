@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bubble Chart Example</title>
+    <!-- כאן יש להוסיף את קישור לספריית D3.js -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <h1>דוגמה לגרף Bubble Chart</h1>
+
+    <!-- יצירת מקום לגרף -->
+    <div id="chart"></div>
+
+    <script>
+        // נתוני הגרף
+        var data = [
+            { name: "אופק", x: 50, y: 30, radius: 10 },
+            { name: "תל אביב", x: 100, y: 60, radius: 20 },
+            { name: "חיפה", x: 150, y: 90, radius: 15 },
+            { name: "ירושלים", x: 200, y: 120, radius: 25 },
+            { name: "באר שבע", x: 250, y: 150, radius: 18 }
+        ];
+
+        // גודלי הדף
+        var width = 400;
+        var height = 300;
+
+        // יצירת קבוצה עבור הגרף
+        var svg = d3.select("#chart")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        // הוספת מעגלים לגרף
+        svg.selectAll("circle")
+            .data(data)
+            .enter()
+            .append("circle")
+            .attr("cx", function(d) { return d.x; })
+            .attr("cy", function(d) { return d.y; })
+            .attr("r", function(d) { return d.radius; })
+            .style("fill", "blue");
+
+        // הוספת תיאורי צירים
+        svg.append("text")
+            .attr("x", width / 2)
+            .attr("y", height - 10)
+            .style("text-anchor", "middle")
+            .text("X-Axis");
+
+        svg.append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("x", -height / 2)
+            .attr("y", 10)
+            .style("text-anchor", "middle")
+            .text("Y-Axis");
+    </script>
+</body>
+</html>

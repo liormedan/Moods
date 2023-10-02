@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pie Chart Example</title>
+    <!-- Include the D3.js library -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <h1>Pie Chart Example</h1>
+
+    <!-- Create a container for the chart -->
+    <div id="chart"></div>
+
+    <script>
+        // Data for the pie chart
+        var data = [
+            { label: "Category A", value: 30 },
+            { label: "Category B", value: 20 },
+            { label: "Category C", value: 50 }
+        ];
+
+        // Define chart dimensions
+        var width = 400;
+        var height = 400;
+        var radius = Math.min(width, height) / 2;
+
+        // Create an SVG element
+        var svg = d3.select("#chart")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        // Create a group for the pie chart
+        var g = svg.append("g")
+            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+        // Define a color scale
+        var color = d3.scaleOrdinal(d3.schemeCategory10);
+
+        // Create a pie layout
+        var pie = d3.pie()
+            .value(function(d) { return d.value; });
+
+        // Generate the pie chart segments
+        var arcs = g.selectAll("arc")
+            .data(pie(data))
+            .enter()
+            .append("g")
+            .attr("class", "arc");
+
+        // Draw each arc segment
+        arcs.append("path")
+            .attr("d", d3.arc()
+                .innerRadius(0)
+                .outerRadius(radius))
+            .attr("fill", function(d) { return color(d.data.label); });
+
+        // Add labels to the pie chart
+        arcs.append("text")
+            .attr("transform", function(d) { return "translate(" + d3.arc().centroid(d) + ")"; })
+            .attr("text-anchor", "middle")
+            .text(function(d) { return d.data.label; });
+    </script>
+</body>
+</html>

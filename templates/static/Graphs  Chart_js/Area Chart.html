@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Area Chart Example</title>
+    <!-- כלול את ספריית Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- מקום להוצאת הגרף -->
+    <div style="width: 80%; margin: 0 auto;">
+        <canvas id="areaChart"></canvas>
+    </div>
+
+    <script>
+        // תיצור נתוני גרף
+        var data = {
+            labels: ['ינואר', 'פברואר', 'מרץ', 'אפריל', 'מאי', 'יוני'],
+            datasets: [{
+                label: 'מכירות חודשיות',
+                data: [100, 150, 120, 180, 200, 170],
+                backgroundColor: 'rgba(75, 192, 192, 0.2)', // צבע האזור
+                borderColor: 'rgba(75, 192, 192, 1)', // צבע הקו
+                borderWidth: 1
+            }]
+        };
+
+        // הגדר את האפשרויות של הגרף
+        var options = {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        };
+
+        // צור את הגרף בעזרת Chart.js
+        var ctx = document.getElementById('areaChart').getContext('2d');
+        var myAreaChart = new Chart(ctx, {
+            type: 'line', // סוג הגרף - גרף קווים
+            data: data,
+            options: options
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Horizontal Bar Chart Example</title>
+    <!-- Include the D3.js library -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <h1>Horizontal Bar Chart Example</h1>
+
+    <!-- Create a container for the chart -->
+    <div id="chart"></div>
+
+    <script>
+        // Data for the chart
+        var data = [
+            { label: "Red", value: 30 },
+            { label: "Green", value: 20 },
+            { label: "Blue", value: 15 },
+            { label: "Yellow", value: 10 },
+            { label: "Purple", value: 25 }
+        ];
+
+        // Define chart dimensions
+        var margin = { top: 20, right: 30, bottom: 40, left: 90 };
+        var width = 400 - margin.left - margin.right;
+        var height = 300 - margin.top - margin.bottom;
+
+        // Create an SVG element
+        var svg = d3.select("#chart")
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        // Create a scale for the x-axis
+        var x = d3.scaleLinear()
+            .domain([0, d3.max(data, function(d) { return d.value; })])
+            .range([0, width]);
+
+        // Create a scale for the y-axis
+        var y = d3.scaleBand()
+            .domain(data.map(function(d) { return d.label; }))
+            .range([0, height])
+            .padding(0.1);
+
+        // Create horizontal bars
+        svg.selectAll(".bar")
+            .data(data)
+            .enter()
+            .append("rect")
+            .attr("class", "bar")
+            .attr("x", 0)
+            .attr("y", function(d) { return y(d.label); })
+            .attr("width", function(d) { return x(d.value); })
+            .attr("height", y.bandwidth());
+
+        // Add labels to the bars
+        svg.selectAll(".label")
+            .data(data)
+            .enter()
+            .append("text")
+            .attr("class", "label")
+            .attr("x", function(d) { return x(d.value) + 10; })
+            .attr("y", function(d) { return y(d.label) + y.bandwidth() / 2; })
+            .text(function(d) { return d.label; });
+
+        // Add x-axis
+        svg.append("g")
+            .attr("class", "x-axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x));
+
+        // Add y-axis
+        svg.append("g")
+            .attr("class", "y-axis")
+            .call(d3.axisLeft(y));
+
+    </script>
+</body>
+</html>

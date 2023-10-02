@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stacked Bar Chart Example</title>
+    <!-- Include the D3.js library -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <h1>Stacked Bar Chart Example</h1>
+
+    <!-- Create a container for the chart -->
+    <div id="chart"></div>
+
+    <script>
+        // Data for the stacked bar chart
+        var data = [
+            { category: "Category A", values: [10, 20, 30] },
+            { category: "Category B", values: [5, 25, 15] },
+            { category: "Category C", values: [15, 10, 20] }
+        ];
+
+        // Define chart dimensions
+        var width = 400;
+        var height = 300;
+
+        // Create an SVG element
+        var svg = d3.select("#chart")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        // Define the number of categories
+        var numCategories = data.length;
+
+        // Define the number of data points in each category
+        var numDataPoints = data[0].values.length;
+
+        // Define the color scale for the stacked bars
+        var color = d3.scaleOrdinal(d3.schemeCategory10);
+
+        // Create a group for the stacked bars
+        var g = svg.append("g");
+
+        // Create a stack generator
+        var stack = d3.stack()
+            .keys(d3.range(numDataPoints))
+            .order(d3.stackOrderNone)
+            .offset(d3.stackOffsetNone);
+
+        // Generate the stacked data
+        var series = stack(data.map(function(d) { return d.values; }));
+
+        // Create the stacked bars
+        g.selectAll(".bar")
+            .data(series)
+            .enter()
+            .append("g")
+            .attr("class", "bar")
+            .style("fill", function(d, i) { return color(i); })
+            .selectAll("rect")
+            .data(function(d) { return d; })
+            .enter()
+            .append("rect")
+            .attr("x", function(d, i) { return i * (width / numCategories); })
+            .attr("y", function(d) { return height - d[1]; })
+            .attr("height", function(d) { return d[1] - d[0]; })
+            .attr("width", width / numCategories);
+
+        // Add labels to the x-axis
+        svg.selectAll(".label")
+            .data(data)
+            .enter()
+            .append("text")
+            .attr("class", "label")
+            .attr("x", function(d, i) { return i * (width / numCategories) + (width / numCategories) / 2; })
+            .attr("y", height + 20)
+            .style("text-anchor", "middle")
+            .text(function(d) { return d.category; });
+
+    </script>
+</body>
+</html>

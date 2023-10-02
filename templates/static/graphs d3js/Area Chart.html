@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Area Chart Example</title>
+    <!-- כאן יש להוסיף את קישור לספריית D3.js -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <h1>דוגמה לגרף אזור (Area Chart)</h1>
+
+    <!-- יצירת מקום לגרף -->
+    <div id="chart"></div>
+
+    <script>
+        // נתוני הגרף
+        var data = [
+            { year: 2020, value: 10 },
+            { year: 2021, value: 20 },
+            { year: 2022, value: 15 },
+            { year: 2023, value: 25 },
+            { year: 2024, value: 12 }
+        ];
+
+        // גודלי הדף
+        var width = 400;
+        var height = 300;
+
+        // יצירת קבוצה עבור הגרף
+        var svg = d3.select("#chart")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        // יצירת סולמית לציר X
+        var xScale = d3.scaleLinear()
+            .domain([d3.min(data, function(d) { return d.year; }), d3.max(data, function(d) { return d.year; })])
+            .range([0, width]);
+
+        // יצירת סולמית לציר Y
+        var yScale = d3.scaleLinear()
+            .domain([0, d3.max(data, function(d) { return d.value; })])
+            .range([height, 0]);
+
+        // הוספת אזור לגרף
+        svg.append("path")
+            .datum(data)
+            .attr("fill", "steelblue")
+            .attr("d", d3.area()
+                .x(function(d) { return xScale(d.year); })
+                .y0(height)
+                .y1(function(d) { return yScale(d.value); })
+            );
+
+        // הוספת תיאורי צירים
+        svg.append("g")
+            .attr("class", "x-axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(xScale).ticks(5));
+
+        svg.append("g")
+            .attr("class", "y-axis")
+            .call(d3.axisLeft(yScale));
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pictorial Chart Example</title>
+    <!-- Include the D3.js library -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <!-- Include any custom icons or images you want to use -->
+    <!-- For this example, we'll use simple circles as icons -->
+</head>
+<body>
+    <h1>Pictorial Chart Example</h1>
+
+    <!-- Create a container for the chart -->
+    <div id="chart"></div>
+
+    <script>
+        // Data for the chart
+        var data = [
+            { label: "Category A", value: 5 },
+            { label: "Category B", value: 8 },
+            { label: "Category C", value: 3 },
+            { label: "Category D", value: 6 },
+            { label: "Category E", value: 4 }
+        ];
+
+        // Define chart dimensions
+        var width = 400;
+        var height = 300;
+
+        // Create an SVG element
+        var svg = d3.select("#chart")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        // Create circles as pictorial icons
+        var icons = svg.selectAll("circle")
+            .data(data)
+            .enter()
+            .append("circle")
+            .attr("cx", function(d, i) { return (i * 70) + 50; }) // Adjust positions as needed
+            .attr("cy", height / 2)
+            .attr("r", function(d) { return d.value * 10; }) // Adjust the scale factor
+            .style("fill", "blue"); // You can set the color as desired
+
+        // Add labels to the icons
+        svg.selectAll("text")
+            .data(data)
+            .enter()
+            .append("text")
+            .attr("x", function(d, i) { return (i * 70) + 50; }) // Adjust positions as needed
+            .attr("y", height / 2 + 20) // Adjust the vertical position of labels
+            .text(function(d) { return d.label; })
+            .style("text-anchor", "middle"); // Center the labels
+
+    </script>
+</body>
+</html>

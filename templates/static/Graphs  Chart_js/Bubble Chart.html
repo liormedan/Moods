@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bubble Chart Example</title>
+    <!-- Include Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Container for the chart -->
+    <div style="width: 80%; margin: 0 auto;">
+        <canvas id="bubbleChart"></canvas>
+    </div>
+
+    <script>
+        // Define your data for the bubble chart
+        var data = {
+            datasets: [{
+                label: 'Dataset 1',
+                data: [{
+                    x: 10,
+                    y: 20,
+                    r: 10 // Radius of the bubble
+                }, {
+                    x: 30,
+                    y: 40,
+                    r: 20
+                }, {
+                    x: 50,
+                    y: 60,
+                    r: 15
+                }],
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1,
+                hoverBackgroundColor: 'rgba(75, 192, 192, 0.4)',
+                hoverBorderColor: 'rgba(75, 192, 192, 1)'
+            }]
+        };
+
+        // Configure options for the chart
+        var options = {
+            responsive: true,
+            scales: {
+                x: {
+                    type: 'linear',
+                    position: 'bottom'
+                },
+                y: {
+                    type: 'linear',
+                    position: 'left'
+                }
+            }
+        };
+
+        // Create the bubble chart using Chart.js
+        var ctx = document.getElementById('bubbleChart').getContext('2d');
+        var myBubbleChart = new Chart(ctx, {
+            type: 'bubble', // Use 'bubble' type for bubble chart
+            data: data,
+            options: options
+        });
+    </script>
+</body>
+</html>

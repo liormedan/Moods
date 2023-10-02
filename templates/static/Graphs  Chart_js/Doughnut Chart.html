@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Doughnut Chart Example</title>
+    <!-- כלול את ספריית Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- מקום להוצאת הגרף -->
+    <div style="width: 80%; margin: 0 auto;">
+        <canvas id="doughnutChart"></canvas>
+    </div>
+
+    <script>
+        // תיצור נתוני גרף
+        var data = {
+            labels: ['אדום', 'כחול', 'ירוק', 'צהוב', 'כתום'],
+            datasets: [{
+                data: [10, 20, 15, 5, 8],
+                backgroundColor: ['red', 'blue', 'green', 'yellow', 'orange']
+            }]
+        };
+
+        // הגדר את האפשרויות של הגרף
+        var options = {
+            responsive: true
+        };
+
+        // צור את הגרף בעזרת Chart.js
+        var ctx = document.getElementById('doughnutChart').getContext('2d');
+        var myDoughnutChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: data,
+            options: options
+        });
+    </script>
+</body>
+</html>

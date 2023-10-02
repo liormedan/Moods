@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MOODS</title>
+    <style>
+        header {
+            text-align: center;
+            border: 2px solid black;
+            padding: 10px;
+            margin: 20px;
+        }
+        .graph-container {
+            border: 2px solid black;
+            width: 80%;
+            height: 150px;
+            margin: auto;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center; 
+        }
+        .slider {
+            width: 90%;
+        }
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            width: 90%;
+        }
+        .slider-value {
+            color: blue;
+            font-size: 54px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>MOODS</h1>
+        <p>heal your moods</p>
+    </header>
+    <div class="graph-container">
+        <input type="range" min="1" max="10" value="5" class="slider" id="moodSlider">
+        <div class="slider-labels">
+            <span>אנרגיה נמוכה</span>
+            <span>מאוזן</span>
+            <span>אנרגיה גבוהה</span>
+        </div>
+        <div class="slider-value" id="sliderValue">5</div>
+    </div>
+    <script>
+        // קוד JavaScript לעדכון הערך של ה-slider
+        const slider = document.getElementById("moodSlider");
+        const sliderValue = document.getElementById("sliderValue");
+
+        slider.oninput = function() {
+            sliderValue.textContent = this.value;
+        }
+    </script>
+</body>
+</html>
+<nav>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/page1">Page 1</a></li>
+        <li><a href="/page2">Page 2</a></li>
+        <!-- הוסף קישורים נוספים לדפים נוספים שתיצור -->
+    </ul>
+</nav>
